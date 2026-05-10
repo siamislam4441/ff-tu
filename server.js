@@ -48,10 +48,12 @@ app.post('/join-tournament', async (req, res) => {
 
         // ইমেইল ট্রান্সপোর্টার
         let transporter = nodemailer.createTransport({
-            service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true, // SSL ব্যবহার করার জন্য
             auth: {
                 user: 'isihab33@gmail.com', 
-                pass: 'etni qoul tmhc csrh' // নিশ্চিত করুন এটি ১৬ ডিজিটের 'App Password'
+                pass: 'etni qoul tmhc csrh' // আপনার ১৬ ডিজিটের অ্যাপ পাসওয়ার্ড
             }
         });
 
