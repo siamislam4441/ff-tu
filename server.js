@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // ১. ডাটাবেস কানেকশন (সংশোধিত লিঙ্ক)
-const mongoURI = 'mongodb+srv://siam00@:siam1122@cluster0.kzvfjvz.mongodb.net/ff_tournament?retryWrites=true&w=majority';
+const mongoURI = 'mongodb+srv://siam00:siam1122@cluster0.kzvfjvz.mongodb.net/ff_tournament?retryWrites=true&w=majority';
 mongoose.connect(mongoURI)
     .then(() => console.log("Connected to Online MongoDB"))
     .catch(err => console.log("DB Connection Error: ", err));
