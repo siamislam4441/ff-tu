@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Free Fire Tournament Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0f0f0f; color: white; }
+        .tournament-card { border: 1px solid #ff4500; background: #1e1e1e; margin-bottom: 20px; transition: 0.3s; }
+        .tournament-card:hover { transform: scale(1.02); }
+        .status-badge { font-size: 0.8rem; padding: 5px 10px; border-radius: 20px; }
+        .Upcoming { background: #007bff; }
+        .Live { background: #28a745; }
+        .Ended { background: #dc3545; }
+    </style>
+</head>
+<body class="container py-5">
+    <h1 class="text-center mb-5" style="color: #ff4500; font-weight: bold;">FREE FIRE TOURNAMENTS</h1>
+    
+    <div id="tournament-display" class="row">
+        <!-- ডাটা এখানে লোড হবে -->
+    </div>
+
+    <script>
+        async function loadData() {
+            const res = await fetch('/api/tournaments');
+            const data = await res.json();
+            const container = document.getElementById('tournament-display');
+            
+            container.innerHTML = data.map(t => `
+                <div class="col-md-4">
+                    <div class="card tournament-card p-3">
+                        <h3>${t.title}</h3>
+                        <p class="mb-1 text-warning">Entry Fee: ${t.fee} BDT</p>
+                        <p><span class="status-badge ${t.status}">${t.status}</span></p>
+                        <hr style="border-color: #444;">
+                        ${t.status === 'Upcoming' ? `
+                            <form action="/join-tournament" method="POST">
+                                <input type="hidden" name="tId" value="${t._id}">
+                                <input type="email" name="email" class="form-control mb-2 bg-dark text-white border-secondary" placeholder="Your Email" required>
+                                <button class="btn btn-warning w-100">Pay & Register</button>
+                            </form>
+                        ` : `<button class="btn btn-secondary w-100" disabled>Closed</button>`}
+                    </div>
+                </div>
+            `).join('');
+        }
+        loadData();
+    </script>
+</body>
+</html>
